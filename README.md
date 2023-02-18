@@ -2,3 +2,4 @@
 
 ## tools used
 - sequence
+- [solid](solidjs.com/)
