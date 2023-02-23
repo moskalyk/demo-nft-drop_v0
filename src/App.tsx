@@ -8,25 +8,24 @@ import { sequence } from '0xsequence'
 
 const App: Component = () => {
   const [signedIn, setSignedIn] = createSignal(false)
-  const goerlidChainId = "0x05"
 
-  const wallet = sequence.initWallet('goerli')
-  console.log(wallet)
+  const wallet = sequence.initWallet('mumbai')
+
   const claim = async () => {
-
+    console.log('claiming NFT')
   }
+
   const connect = async () => {
     const wallet = sequence.getWallet()
 
     const connectWallet = await wallet.connect({
-      networkId: goerlidChainId,
       app: 'drop',
       authorize: true,
       settings: {
-        theme: 'dark'
+        theme: 'light'
       }
     })
-    console.log(connectWallet)
+    if(connectWallet.connected == true) setSignedIn(true)
   }
   return (
     <div class={styles.App}>
@@ -36,7 +35,6 @@ const App: Component = () => {
           : 
           <button onClick={connect}>connect</button>
       }
-      
     </div>
   );
 };
