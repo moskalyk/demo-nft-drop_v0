@@ -5,16 +5,17 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 contract GameItems is ERC1155 {
+
+    uint256 public spaceRandomness = 0;
+    uint256 public timeRandomness = 0;
+    uint256 public hexRandomness = 0;
+
     uint256 public constant HYDROGEN = 0;
     uint256 public constant BRONZE = 1;
     uint256 public constant GEAR = 2;
     uint256 public constant SODIUM = 3;
     uint256 public constant SULFUR = 4;
     uint256 public constant AETHER = 5;
-
-    uint256 public timeRandomness = 0;
-    uint256 public spaceRandomness = 0;
-    uint256 public hexRandomness = 0;
 
     function setSealedSeed(bytes32 _sealedSeed) public {
         require(!seedSet);
@@ -25,7 +26,7 @@ contract GameItems is ERC1155 {
         seedSet = true;
     }
 
-    constructor() public ERC1155("https://game.example/api/item/{id}.json") {
+    constructor() public ERC1155("https://bafybeifr2ugaueljk5tixayp3uhr57zsf6qqpx4jdpx5iw72pwym6mga4m.ipfs.nftstorage.link/{id}.json") {
         _mint(address(this), HYDROGEN, 20, "");
         _mint(address(this), BRONZE, 4, "");
         _mint(address(this), GEAR, 10, "");

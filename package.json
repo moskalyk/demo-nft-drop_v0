@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
+    "postinstall": "copy-marine public",
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
@@ -16,6 +17,8 @@
   },
   "dependencies": {
     "0xsequence": "^0.43.15",
+    "@fluencelabs/fluence": "^0.28.0",
+    "@fluencelabs/fluence-network-environment": "^1.0.14",
     "ethers": "5.7.2",
     "solid-js": "^1.6.10"
   }
