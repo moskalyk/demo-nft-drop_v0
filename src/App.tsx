@@ -17,6 +17,7 @@ const App: Component = () => {
   const [item, setItem] = createSignal(false)
   const [itemImage, setItemImage] = createSignal('')
   const [itemId, setItemId] = createSignal(null)
+  const [itemDescription, setItemDescription] = createSignal(null)
 
 
   const wallet = sequence.initWallet('mumbai')
@@ -45,28 +46,31 @@ const App: Component = () => {
     // console.log(txnResponse)
 
     setTransition('fade-out')
-    setTimeout(() => {
+    setTimeout(async () => {
       setReveal(true)
       setItem(true)
-      setItemImage('')
+      const res = await fetch(`https://bafybeifr2ugaueljk5tixayp3uhr57zsf6qqpx4jdpx5iw72pwym6mga4m.ipfs.nftstorage.link/${claimedNft}.json`)
+      const metadata = await res.json()
+      setItemImage(`https://${metadata.image}.ipfs.nftstorage.link`)
+      setItemDescription(metadata.name)
     }, 4000)
   }
 
   const timeRandom = async () => {
     console.log('time NFT')
+    // TODO: replace with blockchain block.number + 1
     claim(Math.floor(Math.random() * 7))
   }
 
   const hexRandom = async () => {
     console.log('hex NFT')
     const diff = ethers.BigNumber.from(ethers.utils.hexlify(ethers.utils.randomBytes(20)))
-    claim(Number(diff.toString().substring(0,6)) %6)
+    claim(Number(diff.toString().substring(0,6)) % 6)
   }
 
   const spaceRandom = async () => {
     console.log('space NFT')
     const claimedNft = await getRelayTime(krasnodar[0].peerId) % 6
-
     claim(claimedNft)
   }
 
@@ -84,34 +88,40 @@ const App: Component = () => {
   }
   return (
     <div >
+      {/* Loading */}
       {transition() == 'fade-out' && !reveal() ? <div class="loading">Loading&#8230;</div> : null}
       <br/>
       <br/>
+      {/* Banner */}
+      <img class="center" src="https://sequence.xyz/sequence-wordmark.svg" />
       <br/>
       <br/>
+      {/* Pulled Item */}
       {
-        item() 
-        ? 
+        item() ? 
         (
           <>
-            <img src={itemImage()} />
-            <p class="item fade-in">{itemId()}</p>
+            <img class="center" src={itemImage()} />
+            <p class="item fade-in">You pulled {itemDescription()}</p>
           </>
         ) : null
       }
+      {/* randomization shelf */}
       {
         signedIn() ? 
-        <>
-        <br/>
-        { item() ? <p class="prompt">choose your type of randomness</p> : null}
-        <br/>
-        <div class={`container ${transition()}`}>
-          <div onClick={timeRandom}><p class="random">time</p></div>
-          <div onClick={hexRandom}><p class="random">hex</p></div>
-          <div onClick={spaceRandom}><p class="random">space</p></div>
-        </div>
-        </>
-          : 
+          <>
+            <br/>
+            { 
+              ! item() ? <p class={`prompt ${transition()}`}>choose your type of randomness</p> : null
+            }
+            <br/>
+            <div class={`container ${transition()}`}>
+              <div onClick={timeRandom}><p class="random">time</p></div>
+              <div onClick={hexRandom}><p class="random">hex</p></div>
+              <div onClick={spaceRandom}><p class="random">space</p></div>
+            </div>
+          </>
+        : 
           <button class="connect-button" onClick={connect}>connect</button>
       }
     </div>
