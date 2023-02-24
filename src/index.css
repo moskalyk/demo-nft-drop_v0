@@ -292,3 +292,7 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+.item-card {
+  width: 100px;
+}

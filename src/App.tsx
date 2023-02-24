@@ -1,14 +1,33 @@
 import type { Component } from 'solid-js';
-import { createSignal } from "solid-js";
+import { createSignal, observable } from "solid-js";
 
-import logo from './logo.svg';
 import styles from './App.module.css';
 import {ethers} from 'ethers'
 import { sequence } from '0xsequence'
 import { Fluence } from '@fluencelabs/fluence'
 import { krasnodar } from '@fluencelabs/fluence-network-environment'
+import { from } from "rxjs";
 
 import { getRelayTime } from '../generated/Relay';
+
+import { SequenceIndexerClient } from '@0xsequence/indexer'
+
+const indexer = new SequenceIndexerClient('https://goerli-indexer.sequence.app')
+
+var startTime: any, endTime: any;
+
+function start() {
+  startTime = new Date();
+};
+
+function end() {
+  endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  var ms = Math.round(timeDiff);
+  return ms
+}
+
+const contractAddress = '0xd704c95127b8a984a9d4e700477efc3b5535a890'
 
 const App: Component = () => {
   const [signedIn, setSignedIn] = createSignal(false)
@@ -22,6 +41,27 @@ const App: Component = () => {
 
   const wallet = sequence.initWallet('mumbai')
   Fluence.start({connectTo: krasnodar[0]})
+
+  const obsv$ = from(observable(itemId));
+
+  // This breaks with fetch undefined
+  async function checkBalances(){
+    const nftBalances = await indexer.getTokenBalances({
+      contractAddress: contractAddress,
+      accountAddress: contractAddress,
+      includeMetadata: true
+    })
+    console.log(nftBalances)
+  }
+  checkBalances()
+
+  obsv$.subscribe(async (v) => {
+    console.log(v)
+
+    // do an off-chain computation on inprogress claiming
+    // balanceOf()
+  });
+
 
   const claim = async (claimedNft: any) => {
     console.log('claiming NFT: ', claimedNft)
@@ -70,7 +110,9 @@ const App: Component = () => {
 
   const spaceRandom = async () => {
     console.log('space NFT')
+    start()
     const claimedNft = await getRelayTime(krasnodar[0].peerId) % 6
+    console.log(end())
     claim(claimedNft)
   }
 
@@ -101,7 +143,7 @@ const App: Component = () => {
         item() ? 
         (
           <>
-            <img class="center" src={itemImage()} />
+            <img class="center item-card" src={itemImage()} />
             <p class="item fade-in">You pulled {itemDescription()}</p>
           </>
         ) : null
@@ -112,7 +154,7 @@ const App: Component = () => {
           <>
             <br/>
             { 
-              ! item() ? <p class={`prompt ${transition()}`}>choose your type of randomness</p> : null
+              ! item() ? <p class={`prompt ${transition()}`}>claim an NFT, choose your type of randomness</p> : null
             }
             <br/>
             <div class={`container ${transition()}`}>
