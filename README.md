@@ -1,5 +1,5 @@
 # demo-nft-drop
-This is a toy example for how to empower artists to drop ERC1155 NFTs via an  interface that enables users to choose between 3 sources of randomization across: time, hex, & space.
+This is a toy example for how to empower artists to drop ERC1155 NFTs via an interface that enables users to choose between 3 sources of randomization across: time, hex, & space.
 
 ## how to run
 ```
@@ -8,12 +8,12 @@ $ yarn dev
 ```
 
 ### randomization
-- time: math tangent function (assuming time is cyclical)
+- time: processor Math.random() && tangent function
 - hex: ethers crypto hex
 - space: fluence p2p round trip
 
 ### inventory edge cases
-Currently if there is a large influx of users that claim all IDs of an item, randomization does not take into account of exhausted inventory. This can be addressed using a couple solutions. Better error checking for balance onchain. Or, to prevent overuse of gas on transactions, there is a solution for an off-chain cache, that stores in-progress transactions in a cache. 
+Currently if there is a large influx of users that claim all IDs of an item, randomization does not take into account of exhausted inventory. This can be addressed using a couple solutions. Better error checking for balance onchain. Or, to prevent overuse of gas on transactions, there is a solution for an off-chain cache, that stores in-progress transactions in a cache and balance checking in an off-chain nodejs process.
 
 Q: How much is this edge case a problem? 
 

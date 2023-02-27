@@ -45,8 +45,4 @@ contract GameItems is ERC1155 {
             hexRandomness++;
         }
     }
-
-    function randomNumber() public view returns (uint) {
-        return uint(blockhash(block.number - 1));
-    }
 }

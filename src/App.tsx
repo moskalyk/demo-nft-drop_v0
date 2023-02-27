@@ -38,22 +38,21 @@ const App: Component = () => {
   const [itemId, setItemId] = createSignal(null)
   const [itemDescription, setItemDescription] = createSignal(null)
 
-
   const wallet = sequence.initWallet('mumbai')
   Fluence.start({connectTo: krasnodar[0]})
 
   const obsv$ = from(observable(itemId));
 
   // This breaks with fetch undefined
-  async function checkBalances(){
-    const nftBalances = await indexer.getTokenBalances({
-      contractAddress: contractAddress,
-      accountAddress: contractAddress,
-      includeMetadata: true
-    })
-    console.log(nftBalances)
-  }
-  checkBalances()
+  // async function checkBalances(){
+  //   const nftBalances = await indexer.getTokenBalances({
+  //     contractAddress: contractAddress,
+  //     accountAddress: contractAddress,
+  //     includeMetadata: true
+  //   })
+  //   console.log(nftBalances)
+  // }
+  // checkBalances()
 
   obsv$.subscribe(async (v) => {
     console.log(v)
