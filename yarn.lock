@@ -76,9 +76,9 @@
   integrity sha512-AcM212p4oPUKM2DgZ2xgR5vw9F2CJjmwWX4qybRivo2tN3/8ttwnUG6mT4XUOb9wbvSgk+5WXj5/xu54q/Vtdw==
 
 "@0xsequence/indexer@^0.43.18":
-  version "0.43.19"
-  resolved "https://registry.yarnpkg.com/@0xsequence/indexer/-/indexer-0.43.19.tgz#3d18f4d6c15823ebdfcab8c423b5a31e45f80ec4"
-  integrity sha512-QtWqtWnOJRQcXCgQ3Me4fLK/HSVDkV0sH7epu8PZ6U3KeHEsKCg/IZr0tWje9Az0NtIyZBrQ7TbZSkcjEortEQ==
+  version "0.43.18"
+  resolved "https://registry.yarnpkg.com/@0xsequence/indexer/-/indexer-0.43.18.tgz#b430def723d5bef634f42236fc685fdae688044b"
+  integrity sha512-6WvVLYGRymQAfeoFh+i+Z4DOx/CWY1qBiXRsSINSz7mzbv0Tse+BRj2ZDLrCCZj9wC4oBEtAdbd07moqG4a75Q==
 
 "@0xsequence/metadata@^0.43.15":
   version "0.43.15"

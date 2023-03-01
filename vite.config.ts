@@ -10,7 +10,7 @@ export default defineConfig({
     target: 'esnext',
   },
   define: {
-    global: {},
+    // global: {},
     'process.env': {}
   },
 });

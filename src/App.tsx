@@ -4,11 +4,11 @@ import { createSignal, observable } from "solid-js";
 import styles from './App.module.css';
 import {ethers} from 'ethers'
 import { sequence } from '0xsequence'
-import { Fluence } from '@fluencelabs/fluence'
-import { krasnodar } from '@fluencelabs/fluence-network-environment'
+// import { Fluence } from '@fluencelabs/fluence'
+// import { krasnodar } from '@fluencelabs/fluence-network-environment'
 import { from } from "rxjs";
 
-import { getRelayTime } from '../generated/Relay';
+// import { getRelayTime } from '../generated/Relay';
 
 import { SequenceIndexerClient } from '@0xsequence/indexer'
 
@@ -39,20 +39,20 @@ const App: Component = () => {
   const [itemDescription, setItemDescription] = createSignal(null)
 
   const wallet = sequence.initWallet('mumbai')
-  Fluence.start({connectTo: krasnodar[0]})
+  // Fluence.start({connectTo: krasnodar[0]})
 
   const obsv$ = from(observable(itemId));
 
   // This breaks with fetch undefined
-  // async function checkBalances(){
-  //   const nftBalances = await indexer.getTokenBalances({
-  //     contractAddress: contractAddress,
-  //     accountAddress: contractAddress,
-  //     includeMetadata: true
-  //   })
-  //   console.log(nftBalances)
-  // }
-  // checkBalances()
+  async function checkBalances(){
+    const nftBalances = await indexer.getTokenBalances({
+      contractAddress: contractAddress,
+      accountAddress: contractAddress,
+      includeMetadata: true
+    })
+    console.log(nftBalances)
+  }
+  checkBalances()
 
   obsv$.subscribe(async (v) => {
     console.log(v)
@@ -110,9 +110,9 @@ const App: Component = () => {
   const spaceRandom = async () => {
     console.log('space NFT')
     start()
-    const claimedNft = await getRelayTime(krasnodar[0].peerId) % 6
+    // const claimedNft = await getRelayTime(krasnodar[0].peerId) % 6
     console.log(end())
-    claim(claimedNft)
+    // claim(claimedNft)
   }
 
   const connect = async () => {
